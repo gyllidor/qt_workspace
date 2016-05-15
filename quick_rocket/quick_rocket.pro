@@ -1,7 +1,8 @@
 TEMPLATE = app
 
 QT += qml quick
-CONFIG += c++11
+
+CONFIG += c++11 qtquickcompiler
 
 SOURCES += main.cpp
 
