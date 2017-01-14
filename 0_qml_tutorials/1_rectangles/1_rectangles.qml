@@ -65,10 +65,10 @@ Rectangle {
             }
 
             function updateTransparency() {
-                if (idCurtain.color.a == 0 || idCurtain.color.a < 0)
+                if (idCurtain.color.a <= 0)
                     idCurtain.color.a = 1
-
-                idCurtain.color.a -= 0.1
+                else
+                    idCurtain.color.a -= 0.1
             }
         }
     }
