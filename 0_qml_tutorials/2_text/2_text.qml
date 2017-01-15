@@ -8,7 +8,7 @@ Rectangle {
     Image {
         id: idBackground
         anchors.fill: idRoot
-        source: "background.jpg"
+        source: "../images/background.jpg"
         fillMode: Image.Stretch
     }
 

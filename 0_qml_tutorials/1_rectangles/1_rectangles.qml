@@ -10,7 +10,7 @@ Rectangle {
         width: root.width
         height: root.height
         id: idImageBackground
-        source: "batman.png"
+        source: "../images/batman.png"
         anchors.fill: root
     }
 
