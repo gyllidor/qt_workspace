@@ -40,6 +40,7 @@ Rectangle {
         }
     }
 
+
     Text {
         id: idText
         anchors {
