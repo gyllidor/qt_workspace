@@ -5,6 +5,10 @@
 #include <QFileSystemModel>
 #include <QListView>
 
+#include <memory>
+
+class ControllerTabs;
+
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +32,7 @@ private:
     Ui::MainWindow *ui;
     QFileSystemModel* mp_fs_model_left;
     QFileSystemModel* mp_fs_model_right;
+    std::unique_ptr<ControllerTabs> mp_controller_tabs;
 };
 
 #endif // MAINWINDOW_H

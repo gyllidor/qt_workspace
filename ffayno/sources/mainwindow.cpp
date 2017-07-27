@@ -1,17 +1,24 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "controllertabs.h"
+
 #include <QGridLayout>
 #include <QPushButton>
 #include <QListView>
 #include <QFileSystemModel>
+#include <QScrollArea>
 #include <QDebug>
+
+#include "tabbutton.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    mp_controller_tabs = std::make_unique<ControllerTabs>(ui->formLayout);
 
     mp_fs_model_left = new QFileSystemModel(this);
     mp_fs_model_left->setFilter(QDir::AllEntries | QDir::NoDot);
