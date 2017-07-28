@@ -8,22 +8,26 @@
 #include <set>
 #include <memory>
 
-class ControllerTabs : QObject
+class ControllerTabs : public QObject
 {
     Q_OBJECT
 
 public:
+    ControllerTabs(QObject* ip_parent);
     ControllerTabs(QLayout* ip_layout_tabs);
     virtual ~ControllerTabs();
 
+signals:
+    void leftClickedTab(const QString&);
+    void rightClickedTab(const QString&);
+
 private slots:
     void AddTab(const QString& i_dir);
-    void onTabLeftClicked(TabButton* ip_tab_button);
-    void onTabMidClicked(TabButton* ip_tab_button);
-    void onTabRightClicked(TabButton* ip_tab_button);
+    void onTabLeftClicked(const QString &i_path);
+    void onTabMidClicked(TabButton *ip_tab_button);
+    void onTabRightClicked(const QString &i_path);
 
 private:
-    std::set<std::unique_ptr<TabButton>> m_tab_buttons;
     QLayout* mp_layout_tabs;
 };
 

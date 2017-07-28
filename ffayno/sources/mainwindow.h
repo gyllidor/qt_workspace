@@ -8,6 +8,7 @@
 #include <memory>
 
 class ControllerTabs;
+class TabView;
 
 namespace Ui {
 class MainWindow;
@@ -21,18 +22,11 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-public slots:
-    void doubleClickedLeft(const QModelIndex &index);
-    void doubleClickedRight(const QModelIndex &index);
-
-private:
-    void doubleClick(QFileSystemModel* ip_fs_model, QListView* ip_list_view, const QModelIndex &index);
-
 private:
     Ui::MainWindow *ui;
-    QFileSystemModel* mp_fs_model_left;
-    QFileSystemModel* mp_fs_model_right;
     std::unique_ptr<ControllerTabs> mp_controller_tabs;
+    std::unique_ptr<TabView> mp_tab_view_left;
+    std::unique_ptr<TabView> mp_tab_view_right;
 };
 
 #endif // MAINWINDOW_H
