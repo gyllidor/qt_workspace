@@ -1,6 +1,8 @@
 #ifndef TABVIEW_H
 #define TABVIEW_H
 
+#include "tabbutton.h"
+
 #include <QListView>
 #include <QFileSystemModel>
 
@@ -12,9 +14,17 @@ public:
     explicit TabView(QListView* ip_list_view, QObject *parent = 0);
     ~TabView();
 
+    QString getRootPath() const;
+
+signals:
+    void tabViewRootChanged(const TabView*);
+
 public slots:
-    void onTabButtonClicked(const QString& i_path);
+    void onTabClicked(TabButton *ip_tab_button);
     void doubleClicked(const QModelIndex& index);
+
+private:
+    void changeRootDir(const QString& i_new_root_dir);
 
 private:
     QListView* mp_list_view;

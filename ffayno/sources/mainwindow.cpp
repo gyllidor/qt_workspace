@@ -23,12 +23,19 @@ MainWindow::MainWindow(QWidget *parent)
     mp_tab_view_left = std::make_unique<TabView>(ui->listViewLeft);
     mp_tab_view_right = std::make_unique<TabView>(ui->listViewRight);
 
-    connect(mp_controller_tabs.get(), SIGNAL(leftClickedTab(const QString&))
-            , mp_tab_view_left.get(), SLOT(onTabButtonClicked(const QString&)));
+    connect(mp_controller_tabs.get(), &ControllerTabs::tabClickedLeftBtn
+            , mp_tab_view_left.get(), &TabView::onTabClicked);
 
-    connect(mp_controller_tabs.get(), SIGNAL(rightClickedTab(const QString&))
-            , mp_tab_view_right.get(), SLOT(onTabButtonClicked(const QString&)));
+    connect(mp_controller_tabs.get(), &ControllerTabs::tabClickedRight
+            , mp_tab_view_right.get(), &TabView::onTabClicked);
 
+    connect(mp_tab_view_left.get(), &TabView::tabViewRootChanged,
+            mp_controller_tabs.get(), &ControllerTabs::onViewRootDirChangedFirst);
+
+    connect(mp_tab_view_right.get(), &TabView::tabViewRootChanged,
+            mp_controller_tabs.get(), &ControllerTabs::onViewRootDirChangedSecond);
+
+    mp_controller_tabs->Init();
 }
 
 MainWindow::~MainWindow()

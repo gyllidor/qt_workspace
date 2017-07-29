@@ -16,18 +16,15 @@ TabButton::TabButton(const QString &i_dir)
 
 TabButton::TabButton(const QString &i_dir, QWidget *ip_parent)
     : QPushButton(ip_parent)
-    , m_dir(i_dir)
 {
-    setObjectName(i_dir);
+    setPath(i_dir);
     QSizePolicy size_policy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     size_policy.setHorizontalStretch(0);
     size_policy.setVerticalStretch(0);
     size_policy.setHeightForWidth(sizePolicy().hasHeightForWidth());
     setSizePolicy(size_policy);
-    setMaximumSize(QSize(16777215, 1018));
+    setMaximumSize(QSize(120, 1018));
     setLayoutDirection(Qt::LeftToRight);
-
-    setText(i_dir);
 }
 
 TabButton::~TabButton()
@@ -35,9 +32,15 @@ TabButton::~TabButton()
 
 }
 
-const QString &TabButton::getDir() const
+QString TabButton::getPath() const
 {
-    return m_dir;
+    return objectName();
+}
+
+void TabButton::setPath(const QString &i_path)
+{
+    setObjectName(i_path);
+    setText(QFileInfo(i_path).baseName());
 }
 
 void TabButton::mousePressEvent(QMouseEvent *ip_mouse_event)
@@ -45,7 +48,7 @@ void TabButton::mousePressEvent(QMouseEvent *ip_mouse_event)
     if (ip_mouse_event->button() == Qt::LeftButton)
     {
         qDebug() << "woohoo leftbutton";
-        emit leftClicked(getDir());
+        emit leftClicked(this);
         return;
     }
 
@@ -59,7 +62,7 @@ void TabButton::mousePressEvent(QMouseEvent *ip_mouse_event)
     if (ip_mouse_event->button() == Qt::RightButton)
     {
         qDebug() << "woohoo rightbutton";
-        emit rightClicked(getDir());
+        emit rightClicked(this);
         return;
     }
 

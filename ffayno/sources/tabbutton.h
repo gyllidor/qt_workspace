@@ -13,12 +13,13 @@ public:
     TabButton(const QString& i_dir);
     virtual ~TabButton();
 
-    const QString& getDir() const;
+    QString getPath() const;
+    void setPath(const QString& i_path);
 
 signals:
-    void leftClicked(const QString&);
+    void leftClicked(TabButton*);
     void midClicked(TabButton*);
-    void rightClicked(const QString&);
+    void rightClicked(TabButton*);
 
 protected:
     void mousePressEvent(QMouseEvent* ip_mouse_event) override;

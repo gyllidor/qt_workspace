@@ -14,10 +14,7 @@ TabView::TabView(QListView *ip_list_view, QObject *parent)
     , mp_fs_model(new QFileSystemModel())
 {
     mp_fs_model->setFilter(QDir::AllEntries | QDir::NoDot);
-    mp_fs_model->setRootPath(QDir::homePath());
-
     mp_list_view->setModel(mp_fs_model);
-    mp_list_view->setRootIndex(mp_fs_model->index(QDir::homePath()));
 
     connect(mp_list_view, SIGNAL(doubleClicked(const QModelIndex&)),
             this, SLOT(doubleClicked(const QModelIndex&)));
@@ -28,12 +25,16 @@ TabView::~TabView()
     delete mp_fs_model;
 }
 
-void TabView::onTabButtonClicked(const QString &i_path)
+QString TabView::getRootPath() const
 {
-    qDebug() << __FUNCTION__ << i_path;
+    return mp_fs_model->rootPath();
+}
 
-    mp_fs_model->setRootPath(i_path);
-    mp_list_view->setRootIndex(mp_fs_model->index(i_path));
+void TabView::onTabClicked(TabButton *ip_tab_button)
+{
+    qDebug() << __FUNCTION__ << ip_tab_button->getPath();
+
+    changeRootDir(ip_tab_button->getPath());
 }
 
 void TabView::doubleClicked(const QModelIndex &index)
@@ -43,7 +44,13 @@ void TabView::doubleClicked(const QModelIndex &index)
     if (QFileInfo(mp_fs_model->filePath(index)).isFile())
         return;
 
-    const QString path = mp_fs_model->filePath(index);
-    mp_list_view->setRootIndex(mp_fs_model->index(path));
-    mp_fs_model->setRootPath(path);
+    changeRootDir(mp_fs_model->filePath(index));
+}
+
+void TabView::changeRootDir(const QString &i_new_root_dir)
+{
+    mp_list_view->setRootIndex(mp_fs_model->index(i_new_root_dir));
+    mp_fs_model->setRootPath(i_new_root_dir);
+
+    emit tabViewRootChanged(this);
 }
