@@ -22,32 +22,19 @@ void ControllerTabs::Init()
     onTabRightClicked(p_tab_button);
 }
 
-TabButton *ControllerTabs::addTab(const QString &i_dir)
-{
-    auto p_tab_button = new TabButton(i_dir);
-    connect(p_tab_button, SIGNAL(leftClicked(TabButton*)),
-            this, SLOT(onTabLeftClicked(TabButton*)));
-
-    connect(p_tab_button, SIGNAL(midClicked(TabButton*)),
-            this, SLOT(onTabMidClicked(TabButton*)));
-
-    connect(p_tab_button, SIGNAL(rightClicked(TabButton*)),
-            this, SLOT(onTabRightClicked(TabButton*)));
-
-    mp_layout_tabs->addWidget(p_tab_button);
-    qDebug() << mp_layout_tabs->count();
-
-    return p_tab_button;
-}
-
-void ControllerTabs::onViewRootDirChangedFirst(const TabView *ip_tab_view)
+void ControllerTabs::onViewRootDirChangedFirst(const TabListView *ip_tab_view)
 {
     onViewRootDirChanged(ip_tab_view, mp_active_tab_first, mp_active_tab_second);
 }
 
-void ControllerTabs::onViewRootDirChangedSecond(const TabView *ip_tab_view)
+void ControllerTabs::onViewRootDirChangedSecond(const TabListView *ip_tab_view)
 {
     onViewRootDirChanged(ip_tab_view, mp_active_tab_second, mp_active_tab_first);
+}
+
+void ControllerTabs::onAddTab(const QString &i_path)
+{
+    addTab(i_path);
 }
 
 void ControllerTabs::onTabLeftClicked(TabButton *ip_tab_button)
@@ -63,7 +50,11 @@ void ControllerTabs::onTabMidClicked(TabButton *ip_tab_button)
     mp_layout_tabs->removeWidget(ip_tab_button);
     ip_tab_button->deleteLater();
     if (mp_layout_tabs->isEmpty())
-        addTab(QDir::homePath());
+    {
+        auto p_tab_button = addTab(QDir::homePath());
+        onTabLeftClicked(p_tab_button);
+        onTabRightClicked(p_tab_button);
+    }
 
     qDebug() << __FUNCTION__;
 }
@@ -76,7 +67,7 @@ void ControllerTabs::onTabRightClicked(TabButton *ip_tab_button)
     emit tabClickedRight(mp_active_tab_second);
 }
 
-void ControllerTabs::onViewRootDirChanged(const TabView *ip_tab_view
+void ControllerTabs::onViewRootDirChanged(const TabListView *ip_tab_view
                                           , TabButton *& ip_active_tab_first
                                           , TabButton *& ip_active_tab_second)
 {
@@ -105,4 +96,22 @@ TabButton *ControllerTabs::findFirstExistanceTab(const QString &i_dir)
     }
 
     return nullptr;
+}
+
+TabButton *ControllerTabs::addTab(const QString &i_dir)
+{
+    auto p_tab_button = new TabButton(i_dir);
+    connect(p_tab_button, SIGNAL(leftClicked(TabButton*)),
+            this, SLOT(onTabLeftClicked(TabButton*)));
+
+    connect(p_tab_button, SIGNAL(midClicked(TabButton*)),
+            this, SLOT(onTabMidClicked(TabButton*)));
+
+    connect(p_tab_button, SIGNAL(rightClicked(TabButton*)),
+            this, SLOT(onTabRightClicked(TabButton*)));
+
+    mp_layout_tabs->addWidget(p_tab_button);
+    qDebug() << mp_layout_tabs->count();
+
+    return p_tab_button;
 }

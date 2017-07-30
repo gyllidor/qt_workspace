@@ -17,11 +17,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tabbutton.cpp \
     controllertabs.cpp \
-    tabview.cpp
+    tablistview.cpp
 
 HEADERS  += mainwindow.h \
     tabbutton.h \
     controllertabs.h \
-    tabview.h
+    tablistview.h
 
 FORMS    += mainwindow.ui

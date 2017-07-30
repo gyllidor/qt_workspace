@@ -8,7 +8,7 @@
 #include <memory>
 
 class ControllerTabs;
-class TabView;
+class TabListView;
 
 namespace Ui {
 class MainWindow;
@@ -25,8 +25,8 @@ public:
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<ControllerTabs> mp_controller_tabs;
-    std::unique_ptr<TabView> mp_tab_view_left;
-    std::unique_ptr<TabView> mp_tab_view_right;
+    TabListView* mp_tab_view_left;
+    TabListView* mp_tab_view_right;
 };
 
 #endif // MAINWINDOW_H

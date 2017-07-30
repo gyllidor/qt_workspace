@@ -3,19 +3,8 @@
 #include <QDir>
 #include <QDebug>
 
-TabButton::TabButton(QWidget *ip_parent)
-    : TabButton(QDir::homePath(), ip_parent)
-{
-
-}
-
 TabButton::TabButton(const QString &i_dir)
-    : TabButton(i_dir, Q_NULLPTR)
-{
-}
-
-TabButton::TabButton(const QString &i_dir, QWidget *ip_parent)
-    : QPushButton(ip_parent)
+    : QPushButton(nullptr)
 {
     setPath(i_dir);
     QSizePolicy size_policy(QSizePolicy::Minimum, QSizePolicy::Minimum);
@@ -29,7 +18,6 @@ TabButton::TabButton(const QString &i_dir, QWidget *ip_parent)
 
 TabButton::~TabButton()
 {
-
 }
 
 QString TabButton::getPath() const
@@ -45,25 +33,22 @@ void TabButton::setPath(const QString &i_path)
 
 void TabButton::mousePressEvent(QMouseEvent *ip_mouse_event)
 {
-    if (ip_mouse_event->button() == Qt::LeftButton)
+    switch (ip_mouse_event->button())
     {
-        qDebug() << "woohoo leftbutton";
+    case Qt::LeftButton:
         emit leftClicked(this);
         return;
-    }
 
-    if (ip_mouse_event->button() == Qt::MidButton)
-    {
-        qDebug() << "woohoo midbutton";
+    case Qt::MidButton:
         emit midClicked(this);
         return;
-    }
 
-    if (ip_mouse_event->button() == Qt::RightButton)
-    {
-        qDebug() << "woohoo rightbutton";
+    case Qt::RightButton:
         emit rightClicked(this);
         return;
+
+    default:
+        break;
     }
 
     QPushButton::mousePressEvent(ip_mouse_event);

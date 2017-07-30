@@ -9,7 +9,6 @@ class TabButton : public QPushButton
     Q_OBJECT
 
 public:
-    TabButton(QWidget* ip_parent = Q_NULLPTR);
     TabButton(const QString& i_dir);
     virtual ~TabButton();
 
@@ -23,9 +22,6 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent* ip_mouse_event) override;
-
-private:
-    TabButton(const QString& i_dir, QWidget* ip_parent);
 
 private:
     QString m_dir;
