@@ -7,13 +7,6 @@ TabButton::TabButton(const QString &i_dir)
     : QPushButton(nullptr)
 {
     setPath(i_dir);
-    QSizePolicy size_policy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    size_policy.setHorizontalStretch(0);
-    size_policy.setVerticalStretch(0);
-    size_policy.setHeightForWidth(sizePolicy().hasHeightForWidth());
-    setSizePolicy(size_policy);
-    setMaximumSize(QSize(120, 1018));
-    setLayoutDirection(Qt::LeftToRight);
 }
 
 TabButton::~TabButton()

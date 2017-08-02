@@ -19,7 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    mp_controller_tabs = std::make_unique<ControllerTabs>(ui->formLayout);
+    ui->verticalLayout->setAlignment(Qt::AlignTop);
+
+    mp_controller_tabs = std::make_unique<ControllerTabs>(ui->verticalLayout);
     mp_tab_view_left = new TabListView(ui->centralWidget);
     mp_tab_view_right = new TabListView(ui->centralWidget);
     mp_tab_view_left->setObjectName(QStringLiteral("tabLiestViewLeft"));
